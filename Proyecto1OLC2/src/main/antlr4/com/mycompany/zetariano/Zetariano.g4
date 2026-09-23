@@ -25,16 +25,33 @@ dimensionArreglo:   '['']';
 
 objeto:         tipoObjeto ID;
 
-asignarVariable:        asignacion expresion ';'
-               |        tipoIncremento ';'
-               |        asignacion valorArreglo ';'
-               |        asignacion ID ';'
-               |        asignacion instanciarObjeto ';'
+asignarVariable:        asignarVariablePrimitiva ';'
+               |        asignarVariableArreglo ';'
+               |        asignarVaribaleObjeto ';'
                ;
+
+asignarVariablePrimitiva:   asignacion expresion
+                        |   tipoIncremento
+                        ;
+
+asignarVariableArreglo:     asignacion valorArreglo
+                      |     asignacion instanciaArreglo
+                      |     asignacionPosicionArreglo
+                      ;
+
+asignarVaribaleObjeto:      asignacion ID
+                     |      asignacion instanciarObjeto
+                     ;
 
 asignacion:        ID ASIGNACION;
 
 valorArreglo:       '{'expresion (',' expresion)*'}';
+
+instanciaArreglo:      NEW tipoDato tamanioArreglo;
+
+tamanioArreglo:         '[' expresion ']' ('[' expresion ']')*;
+
+asignacionPosicionArreglo:      ID tamanioArreglo ASIGNACION expresion;
 
 tipoIncremento:         ID INCREMENTO
               |         ID DECREMENTO
@@ -45,10 +62,16 @@ tipoIncremento:         ID INCREMENTO
 
 
 
-declAsignVariable:      variable ASIGNACION expresion';'
-                 |      arreglo ASIGNACION valorArreglo ';'
-                 |      objeto ASIGNACION instanciarObjeto';'
+declAsignVariable:      declAsignPrimitivo';'
+                 |      declAsignArreglo';'
+                 |      declAsignObjeto';'
                  ;
+
+declAsignPrimitivo:     variable ASIGNACION expresion;
+
+declAsignArreglo:       arreglo ASIGNACION valorArreglo;
+
+declAsignObjeto:        objeto ASIGNACION instanciarObjeto;
 
 instanciarObjeto:       NEW tipoObjeto '(' argumento? ')';
 
@@ -87,7 +110,9 @@ factor:     NEGACION factor
       ;
 
 valor:      valorPrimitivo
+     |      valorPosicionArreglo
      |      valorObjeto
+     |      valorDatoObjeto
      |      valorTernario
      ;
 
@@ -99,6 +124,8 @@ valorPrimitivo:     ENTERO
               |     FALSE
               |     NULL
               ;
+
+valorPosicionArreglo:   ID'[' expresion ']';
 
 valorObjeto:    tipoObjeto;
 
@@ -115,6 +142,14 @@ tipoPrimitivo:      STRING
 
 tipoObjeto:     ID;
 
+valorDatoObjeto:    accesoDatoObjeto
+               |    accesoMetodo
+               ;
+
+accesoDatoObjeto:     ID '.' ID;
+
+accesoMetodo:       accesoDatoObjeto '(' argumento? ')';
+
 valorTernario:      condicional TERNARIO datoTernario;
 
 condicional:        '(' expresion ')';
@@ -123,31 +158,87 @@ datoTernario:       expresion ':' expresion;
 
 
 
-
-
-
-
-
-
-constructor:        PUBLIC tipoObjeto '(' parametro?')' '{' instrucciones* '}';
+constructor:        PUBLIC tipoObjeto '(' parametro?')' seccionInstrucciones;
 
 parametro:          variable (',' variable)*;
 
-instrucciones:      crearVariable;
+instrucciones:      crearVariable
+             |      sentencia
+             ;
 
+sentencia:      sentenciaFuncionEspecial
+         |      sentenciaInstruccion
+         |      sentenciaInterrupcion
+         ;
 
+sentenciaFuncionEspecial:   imprimirConSaltoLinea
+                        |   imprimiSinSaltoLinea
+                        |   leerEntrada
+                        ;
 
+imprimirConSaltoLinea: PRINTLN'('expresion')'';';
 
+imprimiSinSaltoLinea: PRINT'('expresion')'';';
 
-
-
-
+leerEntrada:    READLN'('')' ';';
 
 funcion:        funcionConRetorno
        |        funcionSinRetorno
        ;
 
-funcionSinRetorno:  PUBLIC VOID ID '('parametro?')' '{' instrucciones* '}';
+sentenciaInstruccion:   sentenciaIf
+                    |   sentenciaSwitch
+                    |   sentenciaCiclo
+                    ;
+
+sentenciaIf:    condicionalIf condicionalElseIf* condicionalElse?;
+
+condicionalIf:  IF condicional seccionInstrucciones
+             |  IF condicional instrucciones
+             ;
+
+
+condicionalElseIf:      ELSE IF condicional seccionInstrucciones
+                 |      ELSE IF condicional instrucciones
+                 ;
+
+condicionalElse:    ELSE seccionInstrucciones
+               |    ELSE instrucciones
+               ;
+
+sentenciaSwitch:    SWITCH '(' ID ')' '{' instruccionesSwitch '}';
+
+instruccionesSwitch:    caso+ default?;
+
+caso:   CASE valorPrimitivo ':' instrucciones* (BREAK';')?;
+
+default:    DEFAULT ':' instrucciones* BREAK';';
+
+sentenciaCiclo:     cicloFor
+              |     cicloWhile
+              |     cicloDoWhile
+              ;
+
+cicloFor:   condicionalFor seccionInstrucciones;
+
+condicionalFor:     FOR'(' (asignarVariablePrimitiva || declAsignPrimitivo)? ';' expresion? ';' tipoIncremento?')';
+
+seccionInstrucciones:    '{' instrucciones* '}';
+
+sentenciaInterrupcion:      CONTINUE ';'
+                     |      BREAK';'
+                     |      RETURN ';'
+                     ;
+
+cicloWhile:     condicionalWhile seccionInstrucciones;
+
+condicionalWhile:   WHILE condicional;
+
+cicloDoWhile:       instruccionesDoWhile condicionalWhile';';
+
+instruccionesDoWhile:   DO seccionInstrucciones;
+
+funcionSinRetorno:  PUBLIC VOID ID '('parametro?')' seccionInstrucciones;
 
 funcionConRetorno:  PUBLIC tipoDato ID '('parametro?')' '{' instrucciones* RETURN expresion ';''}';
 
