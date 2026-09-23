@@ -6,9 +6,9 @@ programa:   importaciones*
             defPrincipal
             FINIS_PRINCIPAL;
 
-importaciones:  IMPORT pathAbsolute;
+importaciones:  IMPORT path;
 
-pathAbsolute:   (rutaCarpetas'.')*nombreArchivo;
+path:   (rutaCarpetas'.')*nombreArchivo;
 
 rutaCarpetas:   ID;
 
@@ -273,8 +273,7 @@ CARACTER:           '\'' . '\'';
 CADENA:             '"' (~["\\] | '\\' .)* '"';
 
 //ESPACIOS
-TABULACION:         [\t];
-ESPACIO:            [ \r\n]+ -> skip;
+ESPACIO:            [ \t\r\n]+ -> skip;
 COMENTARIO_LINEA:   '//' ~[\r\n]* -> skip;
 
 COMENTARIO_MULTILINEA: '##' .*? '##' -> skip;
