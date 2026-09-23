@@ -5,45 +5,56 @@ programa:   defClase;
 
 defClase:   PUBLIC CLASS ID '{' instruccionesClase '}';
 
-instruccionesClase:  variable* constructor* funcion*;
+instruccionesClase:  crearVariable* constructor* funcion*;
 
-variable:   declararVariable ';'
-        |   asignacionVariable ';'
-        ;
+crearVariable:      declararVariable
+             |      asignarVariable
+             |      declAsignVariable
+             ;
 
-declararVariable:   tipoDato ID
-                |   declararArreglo
+declararVariable:   variable ';'
+                |   arreglo ';'
+                |   objeto ';'
                 ;
 
-asignacionVariable:     declararVariable ASIGNACION tipoAsignacion
-                  |     ID ASIGNACION tipoAsignacion
-                  |     asignacionIncremento tipoAsignacion
-                  |     arreglo
-                  |     asignacionTernario
-                  |     objeto
-                  ;
+variable:      tipoDato ID;
 
-tipoDato:   STRING
-        |   INT
-        |   CHAR
-        |   BOOLEAN
-        |   DOUBLE
-        |   tipoObjeto
-        ;
+arreglo:        tipoDato dimensionArreglo+ ID;
 
-tipoObjeto: ID;
+dimensionArreglo:   '['']';
 
-tipoAsignacion:     expresion
-              |     tipoObjeto
-              |     instanciaObjeto
-              |     accesoDatosObjeto
-              |     posicionArreglo
+objeto:         tipoObjeto ID;
+
+asignarVariable:        asignacion expresion ';'
+               |        tipoIncremento ';'
+               |        asignacion valorArreglo ';'
+               |        asignacion ID ';'
+               |        asignacion instanciarObjeto ';'
+               ;
+
+asignacion:        ID ASIGNACION;
+
+valorArreglo:       '{'expresion (',' expresion)*'}';
+
+tipoIncremento:         ID INCREMENTO
+              |         ID DECREMENTO
+              |         ID ASIGNACION_SUMA expresion
+              |         ID ASIGNACION_RESTA expresion
+              |         ID ASIGNACION_MULT expresion
               ;
 
-instanciaObjeto:    NEW tipoObjeto'(' argumento ')';
+
+
+declAsignVariable:      variable ASIGNACION expresion';'
+                 |      arreglo ASIGNACION valorArreglo ';'
+                 |      objeto ASIGNACION instanciarObjeto';'
+                 ;
+
+instanciarObjeto:       NEW tipoObjeto '(' argumento? ')';
+
+argumento:          expresion (',' expresion)*;
 
 expresion:      exprLogica
-         |      ternario
          ;
 
 exprLogica:     exprLogica OR exprLogica
@@ -69,186 +80,76 @@ termino:     termino (MULTIPLICACION | DIVISION | MODULO) factor
        |     factor
        ;
 
-factor:     NEGACION factor         # factorNegacion
-      |     RESTA factor            # factorNegativo
-      |     '(' expresion ')'       # factorParentesis
-      |     valor                   # factorValor
-      |     incremento              # factorIncremento
-      |     ID                      # factorVariable
-      |     posicionArreglo         # factorPosicionArreglo
-      |     datosObjeto       # factorDatoObjeto
-      |     accesoDatosObjeto   # factorAccesoDatosObjeto
+factor:     NEGACION factor
+      |     RESTA factor
+      |     '(' expresion ')'
+      |     valor
       ;
 
-valor:  ENTERO
-     |  CADENA
-     |  DECIMAL
-     |  CARACTER
-     |  TRUE
-     |  FALSE
-     |  NULL
+valor:      valorPrimitivo
+     |      valorObjeto
+     |      valorTernario
      ;
 
-incremento:     ID INCREMENTO
-          |     ID DECREMENTO
-          ;
+valorPrimitivo:     ENTERO
+              |     CADENA
+              |     DECIMAL
+              |     CARACTER
+              |     TRUE
+              |     FALSE
+              |     NULL
+              ;
 
-asignacionIncremento:     ID ASIGNACION_SUMA
-                    |     ID ASIGNACION_RESTA
-                    |     ID ASIGNACION_MULT
-                    ;
+valorObjeto:    tipoObjeto;
 
-accesoDatosObjeto:     tipoObjeto '.' datosObjeto;
+tipoDato:       tipoPrimitivo
+        |       tipoObjeto
+        ;
 
-datosObjeto:      accesoAtributo
-                 |      accesoFuncion
-                 ;
-
-accesoAtributo:   ID;
-
-accesoFuncion:    ID '(' argumento? ')';
-
-argumento:  expresion (',' expresion)*;
-
-declararArreglo:    tipoDato dimensionArreglo+ ID;
-
-instanciaArreglo:   declararArreglo ASIGNACION NEW tipoDato definirDimensionArreglo;
-
-inicializarArreglo:     declararArreglo ASIGNACION dimensionValoresArreglo;
-
-posicionArreglo:    ID '['expresion']';
-
-asignacionPosicionArreglo:  posicionArreglo ASIGNACION expresion;
-
-dimensionValoresArreglo:    '{' valoresArreglo '}' (',' '{' valoresArreglo '}')*;
-
-valoresArreglo:     expresion (',' expresion)*;
-
-dimensionArreglo:   '['']';
-
-arreglo:    declararArreglo
-       |    instanciaArreglo
-       |    inicializarArreglo
-       |    posicionArreglo
-       |    asignacionPosicionArreglo
-       ;
-
-definirDimensionArreglo:    ('['ENTERO']')+;
-
-objeto:     declararObjeto
-      |     instanciarNuevoObjeto
-      |     datosObjeto
-      |     asignacionAtributoObjeto
-      ;
-
-instanciarNuevoObjeto:      declararObjeto instanciaObjeto;
-
-declararObjeto:     tipoObjeto ID;
-
-asignacionAtributoObjeto:   tipoObjeto '.' accesoAtributo;
-
-asignacionTernario:     condicionalTernario TERNARIO valoresTernario;
-
-ternario:       condicionalTernario TERNARIO exprAritmetica ':' exprAritmetica;
-
-condicionalTernario:    exprLogica
-                   |    '('exprLogica')'
-                   ;
-
-valoresTernario:    exprAritmetica ':' exprAritmetica;
-
-constructor:        PUBLIC tipoObjeto '(' parametro*')' '{' instrucciones* '}';
-
-parametro:      declararVariable (',' declararVariable)*;
-
-instrucciones:      variable
-             |      llamarFuncion ';'
-             |      sentencia
-             |      sentenciaReturn ';'
-             |      sentenciaBreak ';'
-             |      sentenciaContinue';'
-             |      incremento ';'
-             |      expresion
+tipoPrimitivo:      STRING
+             |      INT
+             |      CHAR
+             |      BOOLEAN
+             |      DOUBLE
              ;
 
-llamarFuncion:      accesoFuncion;
+tipoObjeto:     ID;
 
-sentencia:      sentenciaFuncionEspecial
-         |      sentenciaInstruccion
-         ;
+valorTernario:      condicional TERNARIO datoTernario;
 
-sentenciaFuncionEspecial:   imprimirConSaltoLinea
-                        |   imprimiSinSaltoLinea
-                        |   leerEntrada
-                        ;
+condicional:        '(' expresion ')';
 
-imprimirConSaltoLinea: PRINTLN'('expresion')'';';
-
-imprimiSinSaltoLinea: PRINT'('expresion')'';';
-
-leerEntrada:    READLN'('')';
-
-sentenciaInstruccion:   sentenciaIf
-                    |   variable
-                    |   sentenciaSwitch
-                    |   ciclos
-                    ;
-
-sentenciaIf:    condicionalIf condicionalElseIf* condicionalElse?;
-
-condicionalIf:  IF'('expresion')' '{' instrucciones* '}'
-             |  IF'('expresion')' instrucciones
-             ;
+datoTernario:       expresion ':' expresion;
 
 
-condicionalElseIf:      ELSE IF'('expresion')' '{' instrucciones* '}'
-                 |      ELSE IF'('expresion')'  instrucciones
-                 ;
 
-condicionalElse:    ELSE '{' instrucciones* '}'
-               |    ELSE instrucciones
-               ;
 
-sentenciaSwitch:    SWITCH '(' ID ')' '{' instruccionesSwitch '}';
 
-instruccionesSwitch:    caso+ default?;
 
-caso:   CASE valor ':' instrucciones* (BREAK';')?;
 
-default:    DEFAULT ':' instrucciones* BREAK';';
 
-ciclos:     cicloFor
-      |     cicloWhile
-      |     cicloDoWhile
-      ;
 
-cicloFor:   condicionalFor instruccionesCiclos;
+constructor:        PUBLIC tipoObjeto '(' parametro?')' '{' instrucciones* '}';
 
-condicionalFor:     FOR'(' asignacionVariable? ';' expresion? ';' incremento')';
+parametro:          variable (',' variable)*;
 
-instruccionesCiclos:    '{' instrucciones '}';
+instrucciones:      crearVariable;
 
-cicloWhile:     condicionalWhile instruccionesCiclos;
 
-condicionalWhile:   WHILE'(' expresion ')';
 
-cicloDoWhile:       instruccionesDoWhile condicionalWhile';';
 
-instruccionesDoWhile:   DO instruccionesCiclos;
 
-sentenciaReturn:    RETURN;
 
-sentenciaBreak:     BREAK;
 
-sentenciaContinue:  CONTINUE;
 
-funcion:    funcionConRetorno
-       |    funcionSinRetorno
+
+funcion:        funcionConRetorno
+       |        funcionSinRetorno
        ;
 
-funcionSinRetorno:  PUBLIC VOID ID '('parametro*')' '{' instrucciones* '}';
+funcionSinRetorno:  PUBLIC VOID ID '('parametro?')' '{' instrucciones* '}';
 
-funcionConRetorno:  PUBLIC tipoDato ID '('parametro*')' '{' instrucciones* RETURN expresion ';''}';
+funcionConRetorno:  PUBLIC tipoDato ID '('parametro?')' '{' instrucciones* RETURN expresion ';''}';
 
 
 
