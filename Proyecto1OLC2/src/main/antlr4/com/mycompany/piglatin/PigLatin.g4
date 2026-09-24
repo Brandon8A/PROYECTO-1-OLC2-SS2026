@@ -4,7 +4,7 @@ grammar PigLatin;
 programa:   importaciones*
             defVariable?
             defPrincipal
-            FINIS_PRINCIPAL;
+            FINIS_PRINCIPAL';';
 
 importaciones:  IMPORT path;
 
@@ -21,36 +21,91 @@ extensionArchivo:   '.z'
 //************************************************
 //DEFINICION DE VARIBLES GLOBALES
 //***********************************************
-defVariable:    VARIABILES MAYOR_QUE listaDeclaracion;
+defVariable:    VARIABILES MAYOR_QUE variables;
 
-listaDeclaracion:   declaracionVariable*;
+variables:  listaDeclaracion*;
 
-declaracionVariable:    declaracionDato         # declaracionPrimitiva
-                    |   declaracionArreglo      # declaracionParaArreglo
-                    |   declaracionObjeto       # declaracionParaObjeto
-                    |   asignacion              # asignacionVariable
-                    ;
+listaDeclaracion:   declararVariable
+                |   asignarVariable
+                |   declAsignVariable
+                ;
 
-declaracionDato:   ESTO ID ':' tipoDato (expresion)? ';';
+declararVariable:   variable ';'
+                |   arreglo ';'
+                |   objeto ';'
+                ;
 
-tipoDato:   datoPrimitivo
-        |   objeto
+variable:   ESTO ID ':' tipoDato;
+
+arreglo:    SERIES ID tamanioArreglo ':' tipoDato;
+
+objeto:     ESTO ID ':' tipoObjeto;
+
+//dimensionArreglo:   '['']' ('['']')*;
+
+tipoDato:   tipoPrimitivo
+        |   tipoObjeto
+        |   tipoEstructura
         ;
 
 //TIPOS DE DATOS PRIMITIVO
-datoPrimitivo:      NUMERUS
+tipoPrimitivo:      NUMERUS
              |      TEXTUM
              |      DECIMALIS
              |      LITTERA
              |      BOOL
              ;
 
-//Tipo de dato Objeto
-objeto:     ID;
+tipoObjeto: ID;
+
+tipoEstructura: ID;
+
+asignarVariable:    asignarVariablePrimitiva';'
+               |    asignarVariableArreglo ';'
+               |    asignarVariableObjeto';'
+               |    asignarVariableEstructura ';'
+               ;
+
+asignarVariablePrimitiva:   idAsignacion expresion
+                        |   tipoIncremento
+                        ;
+
+asignarVariableArreglo:     idAsignacion valoresLlaves
+                      |     ID tamanioArreglo ASIGNACION expresion
+                      ;
+
+valoresLlaves:       '{'expresion (',' expresion)*'}';
+
+asignarVariableObjeto:      idAsignacion tipoObjeto
+                     |      idAsignacion instanciaObjeto
+                     |      asignarAtributoObjeto
+                     ;
+
+instanciaObjeto:    NOVUS tipoObjeto'(' argumento? ')';
+
+argumento:          expresion (',' expresion)*;
+
+//asignarAtributoObjeto:      accesoDatoVariable ASIGNACION expresion;
+asignarAtributoObjeto:      accesoDatosVariables ASIGNACION expresion;
+
+asignarVariableEstructura:      ESTO ID ':' tipoEstructura valoresLlaves;
+
+declAsignVariable:      declAsignPrimitivo ';'
+                 |      declAsignArreglo';'
+                 |      declAsignObjeto';'
+                 ;
+
+declAsignPrimitivo:     ESTO ID ':' tipoPrimitivo expresion;
+
+declAsignArreglo:       SERIES ID tamanioArreglo ':' tipoDato valoresLlaves;
+
+tamanioArreglo:         '[' expresion ']' ('[' expresion ']')*;
+
+declAsignObjeto:        ESTO ID ':' instanciaObjeto;
+
+idAsignacion:   ID ASIGNACION;
 
 expresion:      exprLogica
-         |      exprEstructura
-         |      exprAccesoDatosObjeto
          ;
 
 exprLogica:     exprLogica OR exprLogica
@@ -76,129 +131,126 @@ termino:     termino (MULTIPLICACION | DIVISION) factor
        |     factor
        ;
 
-factor:     NEGACION factor         # factorNegacion
-      |     RESTA factor            # factorNegativo
-      |     '(' expresion ')'       # factorParentesis
-      |     valor                   # factorValor
-      |     accesoArreglo           # factorArreglo
-      |     llamarFuncion           # factorFuncion
-      |     ID                      # factorVariable
+factor:     NEGACION factor
+      |     RESTA factor
+      |     '(' expresion ')'
+      |     valor
       ;
 
-valor:  ENTERO
-     |  CADENA
-     |  DECIMAL
-     |  CARACTER
-     |  VERUM
-     |  FALSUS
+valor:      valorPrimitivo
+     |      valorNoPrimitivo
      ;
 
-exprEstructura:     '{' expresion (',' expresion)*'}';
+valorPrimitivo:     ENTERO
+              |     CADENA
+              |     DECIMAL
+              |     CARACTER
+              |     VERUM
+              |     FALSUS
+              ;
 
-exprAccesoDatosObjeto:     objeto '.' metodoObjeto;
+valorNoPrimitivo:       valorVariable
+                |       valorPosicionArreglo
+                |       valorEstructura
+                //|       valorDatoVariable
+                |       valorObjeto
+                |       accesoDatosVariables
+                ;
 
-metodoObjeto:       ID '(' argumentos? ')';
+valorVariable:  ID;
 
-//AGREGAR ASIGNACION DE VALORES A LOS ARREGLOS
-accesoArreglo:  ID '[' expresion ']';
+valorPosicionArreglo:   ID'[' expresion ']';
 
-llamarFuncion:      ID '(' argumentos? ')';
+valorEstructura:    valoresLlaves;
+/*
+valorDatoVariable:    accesoDatoVariable
+                 |    accesoMetodoVariable
+                 ;
 
-argumentos:     expresion (',' expresion)*;
+accesoDatoVariable:     ID '.' ID;
 
+accesoMetodoVariable:   accesoDatoVariable '(' argumento? ')';
+*/
 
+valorObjeto:    instanciaObjeto;
 
-declaracionArreglo:     SERIES ID '[' expresion ']' ':' tipoArreglo inicializacionArreglo? ';';
+accesoDatosVariables:   ID accesoMiembro+;
 
-tipoArreglo:    tipoDato
-            |   objeto
-            ;
+accesoMiembro:      '.' ID
+             |      '.' ID '(' argumento? ')'
+             |      tamanioArreglo
+             ;
 
-inicializacionArreglo:  '{' listaValores '}';
-
-listaValores:   expresion (',' expresion)*;
-
-
-asignacion:     ID ASIGNACION expresion ';'
-          |     accesoArreglo ASIGNACION expresion ';'
-          ;
-
-
-declaracionObjeto: ESTO objeto ':' NOVUS metodoObjeto;
-
-//********************************************
-//FUNCION PRINCIPAL Y OBLIGATORIA
-//********************************************
-defPrincipal:   MAIOR MAYOR_QUE instrucciones;
-
-instrucciones:      sentencia*;
-
-sentencia:      sentenciaFuncionesEspeciales    # sentenciaFunEspeciales
-         |      sentenciaInstrucciones          # sentenciaInstr
-         ;
-
-sentenciaFuncionesEspeciales:   leerConsola         # sentenciaLeerConsola
-                            |   leerGuardar         # sentenciaLeerVariable
-                            |   imprimir            # sentenciaImprimir
-                            ;
-
-leerConsola:    LEER_TEXTO;
-
-leerGuardar:    ID LEER_TEXTO;
-
-imprimir:       IMPRIMIR_TEXTO valorImprimir (IMPRIMIR_TEXTO valorImprimir)* ';';
-
-valorImprimir:  retorno;
+tipoIncremento:     ID SUMA_ABREVIADA
+              |     ID RESTA_ABREVIADA
+              ;
 
 
-sentenciaInstrucciones:     sentenciaSi         # sentenciaCondicionalSi
-                      |     asignacion          # sentenciaAsignacion
-                      |     ciclos              # sentenciaCiclos
-                      |     sentenciaPerge      # sentenciaContinuar
-                      |     sentenciaInterrumpe # sentenciaBreak
-                      ;
 
 
-sentenciaSi:     condicionalSi  condicionalAliter* condicionalSiNo? FINIS ';';
-
-condicionalSi:          SI '(' expresion ')' '{' instrucciones '}';
-
-condicionalAliter:      ALITER '(' expresion ')' '{' instrucciones '}';
-
-condicionalSiNo:        ALITER '{' instrucciones '}';
 
 
-ciclos:     cicloDum        # cicloMientras
-      |     cicloFacereDum  # cicloHacerMientras
-      |     cicloPer        # cicloPara
-      ;
 
-cicloDum:   condicionalDum instruccionesCiclos FINIS ';';
+defPrincipal:   MAIOR MAYOR_QUE instruccion;
 
-condicionalDum:     DUM '(' expresion ')';
+instruccion:    sentencia*;
 
-cicloFacereDum:   instruccionesFacere condicionalDum ';';
+sentencia:      sentenciaFuncionEspecial
+         |      sentenciaInstruccion;
 
-instruccionesFacere:    FACERE instruccionesCiclos;
+sentenciaFuncionEspecial:    funcionLeerTextoConsola
+                        |    funcionImprimirTexto ';'
+                        ;
 
-cicloPer:   condicionalPer instruccionesCiclos;
+funcionLeerTextoConsola:    leerSinGuardar
+                       |    leerGuardar
+                       ;
 
-condicionalPer:     PER '('ESTO ID ':' NUMERUS expresion ';' expresion ';' incremento ')';
+leerSinGuardar:     LEER_TEXTO;
 
-instruccionesCiclos:    '{' instrucciones '}';
+leerGuardar:        ID LEER_TEXTO;
 
-sentenciaPerge:     PERGE ';';
+funcionImprimirTexto:   imprimirTexto
+                    |   imprimirVariable
+                    ;
 
-sentenciaInterrumpe:    INTERRUMPE ';';
+imprimirTexto:      IMPRIMIR_TEXTO CADENA;
 
-retorno:    expresion
-       |    llamarFuncion
-       ;
+imprimirVariable:   IMPRIMIR_TEXTO ID (IMPRIMIR_TEXTO ID)*;
 
-incremento:     ID SUMA_ABREVIADA
-          |     ID RESTA_ABREVIADA
-          ;
+sentenciaInstruccion:   sentenciaSi
+                    |   sentenciaVariable
+                    |   sentenciaCiclo
+                    ;
 
+sentenciaSi:    condicionalSi condicionalAliterSi* condicionalAliter? FINIS ';';
+
+condicionalSi:  SI condicional seccionInstruccion;
+
+condicional:    '(' expresion ')';
+
+condicionalAliterSi:    ALITER condicional seccionInstruccion;
+
+condicionalAliter:      ALITER seccionInstruccion;
+
+seccionInstruccion:     '{' instruccion '}';
+
+sentenciaVariable:      asignarVariable;
+
+sentenciaCiclo:     cicloDum
+              |     cicloFacereDum
+              |     cicloPer
+              ;
+
+cicloDum:       condicionalDum seccionInstruccion FINIS';';
+
+condicionalDum:     DUM'(' expresion ')';
+
+cicloFacereDum:     FACERE seccionInstruccion condicionalDum ';';
+
+cicloPer:       PER condicionalPer seccionInstruccion;
+
+condicionalPer:     '(' (asignarVariablePrimitiva | declAsignPrimitivo) ';' expresion ';' tipoIncremento ')';
 
 
 //Lexer

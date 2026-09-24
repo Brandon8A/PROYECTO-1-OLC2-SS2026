@@ -30,20 +30,20 @@ asignarVariable:        asignarVariablePrimitiva ';'
                |        asignarVaribaleObjeto ';'
                ;
 
-asignarVariablePrimitiva:   asignacion expresion
+asignarVariablePrimitiva:   idAsignacion expresion
                         |   tipoIncremento
                         ;
 
-asignarVariableArreglo:     asignacion valorArreglo
-                      |     asignacion instanciaArreglo
+asignarVariableArreglo:     idAsignacion valorArreglo
+                      |     idAsignacion instanciaArreglo
                       |     asignacionPosicionArreglo
                       ;
 
-asignarVaribaleObjeto:      asignacion ID
-                     |      asignacion instanciarObjeto
+asignarVaribaleObjeto:      idAsignacion ID
+                     |      idAsignacion instanciarObjeto
                      ;
 
-asignacion:        ID ASIGNACION;
+idAsignacion:        ID ASIGNACION;
 
 valorArreglo:       '{'expresion (',' expresion)*'}';
 
@@ -221,7 +221,7 @@ sentenciaCiclo:     cicloFor
 
 cicloFor:   condicionalFor seccionInstrucciones;
 
-condicionalFor:     FOR'(' (asignarVariablePrimitiva || declAsignPrimitivo)? ';' expresion? ';' tipoIncremento?')';
+condicionalFor:     FOR'(' (asignarVariablePrimitiva | declAsignPrimitivo)? ';' expresion? ';' tipoIncremento?')';
 
 seccionInstrucciones:    '{' instrucciones* '}';
 
