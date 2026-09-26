@@ -119,7 +119,7 @@ exprRelacional:     exprRelacional IGUALDAD exprAritmetica
               |     exprRelacional MENOR_QUE exprAritmetica
               |     exprRelacional MAYOR_IGUAL_QUE exprAritmetica
               |     exprRelacional MENOR_IGUAL_QUE exprAritmetica
-              |     exprRelacional ASIGNACION exprAritmetica
+              //|     exprRelacional ASIGNACION exprAritmetica
               |     exprAritmetica
               ;
 
@@ -152,7 +152,6 @@ valorPrimitivo:     ENTERO
 valorNoPrimitivo:       valorVariable
                 |       valorPosicionArreglo
                 |       valorEstructura
-                //|       valorDatoVariable
                 |       valorObjeto
                 |       accesoDatosVariables
                 ;
@@ -162,15 +161,6 @@ valorVariable:  ID;
 valorPosicionArreglo:   ID'[' expresion ']';
 
 valorEstructura:    valoresLlaves;
-/*
-valorDatoVariable:    accesoDatoVariable
-                 |    accesoMetodoVariable
-                 ;
-
-accesoDatoVariable:     ID '.' ID;
-
-accesoMetodoVariable:   accesoDatoVariable '(' argumento? ')';
-*/
 
 valorObjeto:    instanciaObjeto;
 

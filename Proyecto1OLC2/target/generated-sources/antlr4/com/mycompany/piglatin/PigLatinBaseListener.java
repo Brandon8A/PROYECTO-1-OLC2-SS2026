@@ -101,6 +101,18 @@ public class PigLatinBaseListener implements PigLatinListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterVariables(PigLatinParser.VariablesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVariables(PigLatinParser.VariablesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterListaDeclaracion(PigLatinParser.ListaDeclaracionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -113,61 +125,49 @@ public class PigLatinBaseListener implements PigLatinListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaracionPrimitiva(PigLatinParser.DeclaracionPrimitivaContext ctx) { }
+	@Override public void enterDeclararVariable(PigLatinParser.DeclararVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDeclaracionPrimitiva(PigLatinParser.DeclaracionPrimitivaContext ctx) { }
+	@Override public void exitDeclararVariable(PigLatinParser.DeclararVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaracionParaArreglo(PigLatinParser.DeclaracionParaArregloContext ctx) { }
+	@Override public void enterVariable(PigLatinParser.VariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDeclaracionParaArreglo(PigLatinParser.DeclaracionParaArregloContext ctx) { }
+	@Override public void exitVariable(PigLatinParser.VariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaracionParaObjeto(PigLatinParser.DeclaracionParaObjetoContext ctx) { }
+	@Override public void enterArreglo(PigLatinParser.ArregloContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDeclaracionParaObjeto(PigLatinParser.DeclaracionParaObjetoContext ctx) { }
+	@Override public void exitArreglo(PigLatinParser.ArregloContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAsignacionVariable(PigLatinParser.AsignacionVariableContext ctx) { }
+	@Override public void enterObjeto(PigLatinParser.ObjetoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAsignacionVariable(PigLatinParser.AsignacionVariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDeclaracionDato(PigLatinParser.DeclaracionDatoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDeclaracionDato(PigLatinParser.DeclaracionDatoContext ctx) { }
+	@Override public void exitObjeto(PigLatinParser.ObjetoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -185,25 +185,217 @@ public class PigLatinBaseListener implements PigLatinListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDatoPrimitivo(PigLatinParser.DatoPrimitivoContext ctx) { }
+	@Override public void enterTipoPrimitivo(PigLatinParser.TipoPrimitivoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDatoPrimitivo(PigLatinParser.DatoPrimitivoContext ctx) { }
+	@Override public void exitTipoPrimitivo(PigLatinParser.TipoPrimitivoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterObjeto(PigLatinParser.ObjetoContext ctx) { }
+	@Override public void enterTipoObjeto(PigLatinParser.TipoObjetoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitObjeto(PigLatinParser.ObjetoContext ctx) { }
+	@Override public void exitTipoObjeto(PigLatinParser.TipoObjetoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTipoEstructura(PigLatinParser.TipoEstructuraContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTipoEstructura(PigLatinParser.TipoEstructuraContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAsignarVariable(PigLatinParser.AsignarVariableContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAsignarVariable(PigLatinParser.AsignarVariableContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAsignarVariablePrimitiva(PigLatinParser.AsignarVariablePrimitivaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAsignarVariablePrimitiva(PigLatinParser.AsignarVariablePrimitivaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAsignarVariableArreglo(PigLatinParser.AsignarVariableArregloContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAsignarVariableArreglo(PigLatinParser.AsignarVariableArregloContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterValoresLlaves(PigLatinParser.ValoresLlavesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitValoresLlaves(PigLatinParser.ValoresLlavesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAsignarVariableObjeto(PigLatinParser.AsignarVariableObjetoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAsignarVariableObjeto(PigLatinParser.AsignarVariableObjetoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInstanciaObjeto(PigLatinParser.InstanciaObjetoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInstanciaObjeto(PigLatinParser.InstanciaObjetoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArgumento(PigLatinParser.ArgumentoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArgumento(PigLatinParser.ArgumentoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAsignarAtributoObjeto(PigLatinParser.AsignarAtributoObjetoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAsignarAtributoObjeto(PigLatinParser.AsignarAtributoObjetoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAsignarVariableEstructura(PigLatinParser.AsignarVariableEstructuraContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAsignarVariableEstructura(PigLatinParser.AsignarVariableEstructuraContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDeclAsignVariable(PigLatinParser.DeclAsignVariableContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDeclAsignVariable(PigLatinParser.DeclAsignVariableContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDeclAsignPrimitivo(PigLatinParser.DeclAsignPrimitivoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDeclAsignPrimitivo(PigLatinParser.DeclAsignPrimitivoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDeclAsignArreglo(PigLatinParser.DeclAsignArregloContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDeclAsignArreglo(PigLatinParser.DeclAsignArregloContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTamanioArreglo(PigLatinParser.TamanioArregloContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTamanioArreglo(PigLatinParser.TamanioArregloContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDeclAsignObjeto(PigLatinParser.DeclAsignObjetoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDeclAsignObjeto(PigLatinParser.DeclAsignObjetoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIdAsignacion(PigLatinParser.IdAsignacionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdAsignacion(PigLatinParser.IdAsignacionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -269,85 +461,13 @@ public class PigLatinBaseListener implements PigLatinListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFactorNegacion(PigLatinParser.FactorNegacionContext ctx) { }
+	@Override public void enterFactor(PigLatinParser.FactorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFactorNegacion(PigLatinParser.FactorNegacionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFactorNegativo(PigLatinParser.FactorNegativoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFactorNegativo(PigLatinParser.FactorNegativoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFactorParentesis(PigLatinParser.FactorParentesisContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFactorParentesis(PigLatinParser.FactorParentesisContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFactorValor(PigLatinParser.FactorValorContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFactorValor(PigLatinParser.FactorValorContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFactorArreglo(PigLatinParser.FactorArregloContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFactorArreglo(PigLatinParser.FactorArregloContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFactorFuncion(PigLatinParser.FactorFuncionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFactorFuncion(PigLatinParser.FactorFuncionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFactorVariable(PigLatinParser.FactorVariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFactorVariable(PigLatinParser.FactorVariableContext ctx) { }
+	@Override public void exitFactor(PigLatinParser.FactorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -365,145 +485,109 @@ public class PigLatinBaseListener implements PigLatinListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprEstructura(PigLatinParser.ExprEstructuraContext ctx) { }
+	@Override public void enterValorPrimitivo(PigLatinParser.ValorPrimitivoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprEstructura(PigLatinParser.ExprEstructuraContext ctx) { }
+	@Override public void exitValorPrimitivo(PigLatinParser.ValorPrimitivoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprAccesoDatosObjeto(PigLatinParser.ExprAccesoDatosObjetoContext ctx) { }
+	@Override public void enterValorNoPrimitivo(PigLatinParser.ValorNoPrimitivoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprAccesoDatosObjeto(PigLatinParser.ExprAccesoDatosObjetoContext ctx) { }
+	@Override public void exitValorNoPrimitivo(PigLatinParser.ValorNoPrimitivoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMetodoObjeto(PigLatinParser.MetodoObjetoContext ctx) { }
+	@Override public void enterValorVariable(PigLatinParser.ValorVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMetodoObjeto(PigLatinParser.MetodoObjetoContext ctx) { }
+	@Override public void exitValorVariable(PigLatinParser.ValorVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAccesoArreglo(PigLatinParser.AccesoArregloContext ctx) { }
+	@Override public void enterValorPosicionArreglo(PigLatinParser.ValorPosicionArregloContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAccesoArreglo(PigLatinParser.AccesoArregloContext ctx) { }
+	@Override public void exitValorPosicionArreglo(PigLatinParser.ValorPosicionArregloContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLlamarFuncion(PigLatinParser.LlamarFuncionContext ctx) { }
+	@Override public void enterValorEstructura(PigLatinParser.ValorEstructuraContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLlamarFuncion(PigLatinParser.LlamarFuncionContext ctx) { }
+	@Override public void exitValorEstructura(PigLatinParser.ValorEstructuraContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArgumentos(PigLatinParser.ArgumentosContext ctx) { }
+	@Override public void enterValorObjeto(PigLatinParser.ValorObjetoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArgumentos(PigLatinParser.ArgumentosContext ctx) { }
+	@Override public void exitValorObjeto(PigLatinParser.ValorObjetoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaracionArreglo(PigLatinParser.DeclaracionArregloContext ctx) { }
+	@Override public void enterAccesoDatosVariables(PigLatinParser.AccesoDatosVariablesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDeclaracionArreglo(PigLatinParser.DeclaracionArregloContext ctx) { }
+	@Override public void exitAccesoDatosVariables(PigLatinParser.AccesoDatosVariablesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTipoArreglo(PigLatinParser.TipoArregloContext ctx) { }
+	@Override public void enterAccesoMiembro(PigLatinParser.AccesoMiembroContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTipoArreglo(PigLatinParser.TipoArregloContext ctx) { }
+	@Override public void exitAccesoMiembro(PigLatinParser.AccesoMiembroContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInicializacionArreglo(PigLatinParser.InicializacionArregloContext ctx) { }
+	@Override public void enterTipoIncremento(PigLatinParser.TipoIncrementoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInicializacionArreglo(PigLatinParser.InicializacionArregloContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterListaValores(PigLatinParser.ListaValoresContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitListaValores(PigLatinParser.ListaValoresContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAsignacion(PigLatinParser.AsignacionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAsignacion(PigLatinParser.AsignacionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDeclaracionObjeto(PigLatinParser.DeclaracionObjetoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDeclaracionObjeto(PigLatinParser.DeclaracionObjetoContext ctx) { }
+	@Override public void exitTipoIncremento(PigLatinParser.TipoIncrementoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -521,85 +605,61 @@ public class PigLatinBaseListener implements PigLatinListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstrucciones(PigLatinParser.InstruccionesContext ctx) { }
+	@Override public void enterInstruccion(PigLatinParser.InstruccionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInstrucciones(PigLatinParser.InstruccionesContext ctx) { }
+	@Override public void exitInstruccion(PigLatinParser.InstruccionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSentenciaFunEspeciales(PigLatinParser.SentenciaFunEspecialesContext ctx) { }
+	@Override public void enterSentencia(PigLatinParser.SentenciaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSentenciaFunEspeciales(PigLatinParser.SentenciaFunEspecialesContext ctx) { }
+	@Override public void exitSentencia(PigLatinParser.SentenciaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSentenciaInstr(PigLatinParser.SentenciaInstrContext ctx) { }
+	@Override public void enterSentenciaFuncionEspecial(PigLatinParser.SentenciaFuncionEspecialContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSentenciaInstr(PigLatinParser.SentenciaInstrContext ctx) { }
+	@Override public void exitSentenciaFuncionEspecial(PigLatinParser.SentenciaFuncionEspecialContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSentenciaLeerConsola(PigLatinParser.SentenciaLeerConsolaContext ctx) { }
+	@Override public void enterFuncionLeerTextoConsola(PigLatinParser.FuncionLeerTextoConsolaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSentenciaLeerConsola(PigLatinParser.SentenciaLeerConsolaContext ctx) { }
+	@Override public void exitFuncionLeerTextoConsola(PigLatinParser.FuncionLeerTextoConsolaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSentenciaLeerVariable(PigLatinParser.SentenciaLeerVariableContext ctx) { }
+	@Override public void enterLeerSinGuardar(PigLatinParser.LeerSinGuardarContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSentenciaLeerVariable(PigLatinParser.SentenciaLeerVariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSentenciaImprimir(PigLatinParser.SentenciaImprimirContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSentenciaImprimir(PigLatinParser.SentenciaImprimirContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLeerConsola(PigLatinParser.LeerConsolaContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLeerConsola(PigLatinParser.LeerConsolaContext ctx) { }
+	@Override public void exitLeerSinGuardar(PigLatinParser.LeerSinGuardarContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -617,85 +677,49 @@ public class PigLatinBaseListener implements PigLatinListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterImprimir(PigLatinParser.ImprimirContext ctx) { }
+	@Override public void enterFuncionImprimirTexto(PigLatinParser.FuncionImprimirTextoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitImprimir(PigLatinParser.ImprimirContext ctx) { }
+	@Override public void exitFuncionImprimirTexto(PigLatinParser.FuncionImprimirTextoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterValorImprimir(PigLatinParser.ValorImprimirContext ctx) { }
+	@Override public void enterImprimirTexto(PigLatinParser.ImprimirTextoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitValorImprimir(PigLatinParser.ValorImprimirContext ctx) { }
+	@Override public void exitImprimirTexto(PigLatinParser.ImprimirTextoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSentenciaCondicionalSi(PigLatinParser.SentenciaCondicionalSiContext ctx) { }
+	@Override public void enterImprimirVariable(PigLatinParser.ImprimirVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSentenciaCondicionalSi(PigLatinParser.SentenciaCondicionalSiContext ctx) { }
+	@Override public void exitImprimirVariable(PigLatinParser.ImprimirVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSentenciaAsignacion(PigLatinParser.SentenciaAsignacionContext ctx) { }
+	@Override public void enterSentenciaInstruccion(PigLatinParser.SentenciaInstruccionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSentenciaAsignacion(PigLatinParser.SentenciaAsignacionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSentenciaCiclos(PigLatinParser.SentenciaCiclosContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSentenciaCiclos(PigLatinParser.SentenciaCiclosContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSentenciaContinuar(PigLatinParser.SentenciaContinuarContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSentenciaContinuar(PigLatinParser.SentenciaContinuarContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSentenciaBreak(PigLatinParser.SentenciaBreakContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSentenciaBreak(PigLatinParser.SentenciaBreakContext ctx) { }
+	@Override public void exitSentenciaInstruccion(PigLatinParser.SentenciaInstruccionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -725,6 +749,30 @@ public class PigLatinBaseListener implements PigLatinListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCondicional(PigLatinParser.CondicionalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCondicional(PigLatinParser.CondicionalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCondicionalAliterSi(PigLatinParser.CondicionalAliterSiContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCondicionalAliterSi(PigLatinParser.CondicionalAliterSiContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCondicionalAliter(PigLatinParser.CondicionalAliterContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -737,49 +785,37 @@ public class PigLatinBaseListener implements PigLatinListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCondicionalSiNo(PigLatinParser.CondicionalSiNoContext ctx) { }
+	@Override public void enterSeccionInstruccion(PigLatinParser.SeccionInstruccionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCondicionalSiNo(PigLatinParser.CondicionalSiNoContext ctx) { }
+	@Override public void exitSeccionInstruccion(PigLatinParser.SeccionInstruccionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCicloMientras(PigLatinParser.CicloMientrasContext ctx) { }
+	@Override public void enterSentenciaVariable(PigLatinParser.SentenciaVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCicloMientras(PigLatinParser.CicloMientrasContext ctx) { }
+	@Override public void exitSentenciaVariable(PigLatinParser.SentenciaVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCicloHacerMientras(PigLatinParser.CicloHacerMientrasContext ctx) { }
+	@Override public void enterSentenciaCiclo(PigLatinParser.SentenciaCicloContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCicloHacerMientras(PigLatinParser.CicloHacerMientrasContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCicloPara(PigLatinParser.CicloParaContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCicloPara(PigLatinParser.CicloParaContext ctx) { }
+	@Override public void exitSentenciaCiclo(PigLatinParser.SentenciaCicloContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -821,18 +857,6 @@ public class PigLatinBaseListener implements PigLatinListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstruccionesFacere(PigLatinParser.InstruccionesFacereContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitInstruccionesFacere(PigLatinParser.InstruccionesFacereContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterCicloPer(PigLatinParser.CicloPerContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -852,66 +876,6 @@ public class PigLatinBaseListener implements PigLatinListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCondicionalPer(PigLatinParser.CondicionalPerContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterInstruccionesCiclos(PigLatinParser.InstruccionesCiclosContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitInstruccionesCiclos(PigLatinParser.InstruccionesCiclosContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSentenciaPerge(PigLatinParser.SentenciaPergeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSentenciaPerge(PigLatinParser.SentenciaPergeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSentenciaInterrumpe(PigLatinParser.SentenciaInterrumpeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSentenciaInterrumpe(PigLatinParser.SentenciaInterrumpeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRetorno(PigLatinParser.RetornoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRetorno(PigLatinParser.RetornoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterIncremento(PigLatinParser.IncrementoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIncremento(PigLatinParser.IncrementoContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
