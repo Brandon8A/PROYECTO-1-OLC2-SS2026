@@ -1,4 +1,4 @@
-package com.mycompany.proyecto1olc2.utils;
+package com.mycompany.proyecto1olc2.backend.utils;
 
 public enum TipoDato {
     NUMERUS(5),

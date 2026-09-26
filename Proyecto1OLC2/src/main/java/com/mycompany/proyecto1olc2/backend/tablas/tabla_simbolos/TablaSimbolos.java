@@ -1,6 +1,7 @@
-package com.mycompany.proyecto1olc2.tabla_simbolos;
+package com.mycompany.proyecto1olc2.backend.tablas.tabla_simbolos;
 
-import com.mycompany.proyecto1olc2.utils.CategoriaSimbolo;
+import com.mycompany.proyecto1olc2.backend.tablas.tabla_simbolos.Simbolo;
+import com.mycompany.proyecto1olc2.backend.utils.CategoriaSimbolo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +18,30 @@ public class TablaSimbolos {
     }
 
     //Funcion que agrega un nuevo simbolo a SIMBOLOS, retorna el id del simbolo agregado
-    public int agregarSimbolo(String nombre, CategoriaSimbolo categoria, int idTipo, Integer numeroParametros, String ambito, Object valor, Integer dimension, List<Integer> tamaniosDimensiones, Integer tamanoTotal){
+    public int agregarSimbolo(
+            String nombre, 
+            CategoriaSimbolo categoria, 
+            int idTipo, 
+            Integer numeroParametros, 
+            String ambito, 
+            Object valor, 
+            Integer dimension, 
+            List<Integer> tamaniosDimensiones, 
+            Integer tamanoTotal,
+            Integer direccion){
         int id = siguienteId++;//Creando nuevo ID
-        Simbolo simboloNuevo = new Simbolo(id, nombre, categoria, idTipo, numeroParametros, ambito, valor, dimension, tamaniosDimensiones, tamanoTotal);//Creando nuevo simbolo
+        Simbolo simboloNuevo = new Simbolo(
+                id, 
+                nombre, 
+                categoria, 
+                idTipo, 
+                numeroParametros, 
+                ambito, 
+                valor, 
+                dimension, 
+                tamaniosDimensiones, 
+                tamanoTotal,
+                direccion);//Creando nuevo simbolo
         SIMBOLOS.put(id, simboloNuevo);//Agregando simbolo a SIMBOLOS
         return id;//retorna id del simbolo que se creo
     }

@@ -6,9 +6,9 @@ package com.mycompany.proyecto1olc2;
 
 import com.mycompany.piglatin.PigLatinLexer;
 import com.mycompany.piglatin.PigLatinParser;
-import com.mycompany.proyecto1olc2.tabla_simbolos.Simbolo;
-import com.mycompany.proyecto1olc2.tabla_simbolos.SimbolosListener;
-import com.mycompany.proyecto1olc2.tabla_simbolos.Tipo;
+import com.mycompany.proyecto1olc2.backend.tablas.tabla_simbolos.Simbolo;
+import com.mycompany.proyecto1olc2.backend.tablas.SimbolosListener;
+import com.mycompany.proyecto1olc2.backend.tablas.tabla_tipos.Tipo;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;

@@ -1,8 +1,8 @@
-package com.mycompany.proyecto1olc2.semantico;
+package com.mycompany.proyecto1olc2.backend.semantico;
 
 import com.mycompany.piglatin.PigLatinBaseVisitor;
 import com.mycompany.piglatin.PigLatinParser;
-import com.mycompany.proyecto1olc2.utils.TipoDato;
+import com.mycompany.proyecto1olc2.backend.utils.TipoDato;
 
 public class AnalisisSemanticoPigLatin extends PigLatinBaseVisitor<TipoDato> {
 

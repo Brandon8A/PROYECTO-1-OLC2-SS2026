@@ -1,5 +1,6 @@
-package com.mycompany.proyecto1olc2.tabla_simbolos;
+package com.mycompany.proyecto1olc2.backend.tablas.tabla_tipos;
 
+import com.mycompany.proyecto1olc2.backend.tablas.tabla_tipos.Tipo;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +35,20 @@ public class TablaTipos {
     //Metodo que se encarga de buscar y devolver un tipo por medio de su id
     public Tipo buscarPorId(int id){
         return this.TIPOS.get(id);
+    }
+    
+    /**
+     * Funcion que se encarga de buscar un tipo de dato por su nombre 
+     * @param nombreTipo bombre del tipo de dato que se desea buscar
+     * @return retorna el tipo de dato encontrado si es que lo encuentra, de lo contrario retorn null
+     */
+    public Tipo buscarPorNombre(String nombreTipo){
+        for (Tipo tipo : TIPOS.values()) {
+            if (tipo.getNOMBRE().equals(nombreTipo)) {
+                return tipo;
+            }
+        }
+        return null;
     }
 
     //Funcion que devuelve la tabla con los tipos registrados en ella.

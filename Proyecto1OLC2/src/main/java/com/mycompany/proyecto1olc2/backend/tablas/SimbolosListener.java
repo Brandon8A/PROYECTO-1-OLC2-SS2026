@@ -1,20 +1,27 @@
-package com.mycompany.proyecto1olc2.tabla_simbolos;
+package com.mycompany.proyecto1olc2.backend.tablas;
 
+import com.mycompany.proyecto1olc2.backend.tablas.tabla_tipos.TablaTipos;
 import com.mycompany.piglatin.PigLatinBaseListener;
 import com.mycompany.piglatin.PigLatinParser;
-import com.mycompany.proyecto1olc2.utils.CategoriaSimbolo;
+import com.mycompany.proyecto1olc2.backend.memoria.TablaHeap;
+import com.mycompany.proyecto1olc2.backend.tablas.tabla_simbolos.TablaSimbolos;
+import com.mycompany.proyecto1olc2.backend.tablas.tabla_tipos.Tipo;
+import com.mycompany.proyecto1olc2.backend.utils.CategoriaSimbolo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SimbolosListener extends PigLatinBaseListener {
+
     private final TablaSimbolos TABLA_SIMBOLOS;
     private final TablaTipos TABLA_TIPOS;
+    private final TablaHeap TABLA_HEAP;
     private String ambitoActual;
 
-    public SimbolosListener(){
+    public SimbolosListener() {
         this.TABLA_SIMBOLOS = new TablaSimbolos();
         this.TABLA_TIPOS = new TablaTipos();
+        this.TABLA_HEAP = new TablaHeap();
         this.ambitoActual = "Global";
     }
 
@@ -28,7 +35,7 @@ public class SimbolosListener extends PigLatinBaseListener {
 
         int idTipo = this.TABLA_TIPOS.registrarTipo(tipoVariable);
 
-        this.TABLA_SIMBOLOS.agregarSimbolo(idVariable, CategoriaSimbolo.VARIABLE, idTipo, null, ambitoActual, null, null, null, null);
+        this.TABLA_SIMBOLOS.agregarSimbolo(idVariable, CategoriaSimbolo.VARIABLE, idTipo, null, ambitoActual, null, null, null, null, null);
     }
 
     /*
@@ -56,14 +63,15 @@ public class SimbolosListener extends PigLatinBaseListener {
                 null,
                 dimension,
                 tamanios,
-                tamanioTotal
+                tamanioTotal,
+                null
         );
     }
 
     //Funcion que obtiene las dimensiones del arreglo
-    private List<Integer> obtenerTamanios(PigLatinParser.TamanioArregloContext ctx){
+    private List<Integer> obtenerTamanios(PigLatinParser.TamanioArregloContext ctx) {
         List<Integer> tamanios = new ArrayList<>();//Creando la lista de los tamanios que va a tener el arreglo
-        for (PigLatinParser.ExpresionContext expresion : ctx.expresion()){//Recorrer "todas las dimensiones declaradas"
+        for (PigLatinParser.ExpresionContext expresion : ctx.expresion()) {//Recorrer "todas las dimensiones declaradas"
             String texto = expresion.getText();//Obteniendo tamaño
             try {
                 int tamanio = Integer.parseInt(texto);//INtentar parsear a entero
@@ -77,14 +85,27 @@ public class SimbolosListener extends PigLatinBaseListener {
     }
 
     //Funcion que calcula el tamanio total del arreglo
-    private int calcularTamanioTotal(List<Integer> tamanios){
+    private int calcularTamanioTotal(List<Integer> tamanios) {
         int total = 1;
-        for (Integer tamanio: tamanios){//Recorrer el "tamaño de las dimensiones" del arreglo
+        for (Integer tamanio : tamanios) {//Recorrer el "tamaño de las dimensiones" del arreglo
             total *= tamanio;//Calculando tamanio total
         }
         return total;//Retorna total
     }
 
+    /*
+    objeto:     ESTO ID ':' tipoObjeto;
+    */
+    @Override 
+    public void enterObjeto(PigLatinParser.ObjetoContext ctx) {
+        String idVariable = ctx.ID().getText();
+        String tipoVariable = ctx.tipoObjeto().getText();
+        
+        int idTipo = this.TABLA_TIPOS.registrarTipo(tipoVariable);
+        
+        this.TABLA_SIMBOLOS.agregarSimbolo(idVariable, CategoriaSimbolo.OBJETO, idTipo, null, ambitoActual, null, null, null, null, null);
+    }
+    
     /*
     declAsignPrimitivo:     ESTO ID ':' tipoPrimitivo expresion;
      */
@@ -97,7 +118,7 @@ public class SimbolosListener extends PigLatinBaseListener {
         int idTipo = this.TABLA_TIPOS.registrarTipo(tipoVariable);
 
         //Registrar simbolo en la tabla de simbolos
-        this.TABLA_SIMBOLOS.agregarSimbolo(idVariable, CategoriaSimbolo.VARIABLE, idTipo, null, ambitoActual, null, null, null, null);
+        this.TABLA_SIMBOLOS.agregarSimbolo(idVariable, CategoriaSimbolo.VARIABLE, idTipo, null, ambitoActual, null, null, null, null, null);
     }
 
     public TablaSimbolos getTABLA_SIMBOLOS() {
@@ -133,7 +154,53 @@ public class SimbolosListener extends PigLatinBaseListener {
                 null,
                 dimensiones,
                 tamanios,
-                tamanioTotal
+                tamanioTotal,
+                null
         );
     }
+
+    /*
+    declAsignObjeto:    ESTO ID ':' instanciaObjeto;
+    
+    instanciaObjeto:    NOVUS tipoObjeto'(' argumento? ')';
+    */
+    @Override 
+    public void enterDeclAsignObjeto(PigLatinParser.DeclAsignObjetoContext ctx) {
+        String idObjeto = ctx.ID().getText();
+        String tipoObjeto = ctx.instanciaObjeto().tipoObjeto().getText();
+        
+        Tipo tipo = this.TABLA_TIPOS.buscarPorNombre(tipoObjeto);
+        
+        if (tipo == null) {
+            System.out.println("No se ha registrado tipo: " + tipoObjeto);
+            return;
+        }
+        
+        int direccionHeap = this.TABLA_HEAP.reservarHeap(tipo);//Crear instancia en heap, se manda el tipo por que se desea conocer los atributos del tipo
+        
+        //Registrar objeto en la tabla de simbolos
+        this.TABLA_SIMBOLOS.agregarSimbolo(
+                idObjeto, 
+                CategoriaSimbolo.OBJETO, 
+                tipo.getID(), 
+                null, 
+                ambitoActual, 
+                null, 
+                null, 
+                null, 
+                null, 
+                direccionHeap
+            );
+    }
+    
+    
+    
+    
+    
+    
+    public TablaHeap getTABLA_HEAP() {
+        return TABLA_HEAP;
+    }
+    
+    
 }
